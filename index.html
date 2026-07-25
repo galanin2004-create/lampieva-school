@@ -1,0 +1,993 @@
+<title>Школа Лампиевой — легче полюбить, чем зазубрить</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+@font-face {
+  font-family: 'Display';
+  src: local('Arial Black'), local('Impact'), local('Trebuchet MS');
+  font-weight: 900;
+  font-style: normal;
+}
+
+:root {
+  --blue: #6DC5F7;
+  --blue-deep: #2E9BD6;
+  --blue-pale: #E8F6FE;
+  --blue-vivid: #4AB8F5;
+  --black: #0A0A0A;
+  --white: #FFFFFF;
+  --cream: #F4FAFE;
+  --gray: #5A5A5A;
+  --gray-muted: #999;
+
+  --bg: var(--white);
+  --bg-alt: var(--cream);
+  --bg-blue: var(--blue);
+  --bg-dark: var(--black);
+  --text: #111;
+  --text-sec: #555;
+  --text-inv: #fff;
+  --text-inv-sec: rgba(255,255,255,0.7);
+  --card-bg: #fff;
+  --card-border: #e4eef4;
+  --dot-color: rgba(46,155,214,0.18);
+  --blob-blue: #6DC5F7;
+  --review-bg: #f0f8fe;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #080b10; --bg-alt: #0e1218; --bg-blue: #1a3a50;
+    --bg-dark: #050709; --text: #dce0e8; --text-sec: #7e8594;
+    --text-inv: #eef1f6; --text-inv-sec: rgba(220,224,232,0.6);
+    --card-bg: #12161e; --card-border: #1e2430;
+    --dot-color: rgba(109,197,247,0.1); --blob-blue: #1a3a50;
+    --review-bg: #10141c;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #080b10; --bg-alt: #0e1218; --bg-blue: #1a3a50;
+  --bg-dark: #050709; --text: #dce0e8; --text-sec: #7e8594;
+  --text-inv: #eef1f6; --text-inv-sec: rgba(220,224,232,0.6);
+  --card-bg: #12161e; --card-border: #1e2430;
+  --dot-color: rgba(109,197,247,0.1); --blob-blue: #1a3a50;
+  --review-bg: #10141c;
+}
+:root[data-theme="light"] {
+  --bg: #FFFFFF; --bg-alt: #F4FAFE; --bg-blue: #6DC5F7;
+  --bg-dark: #0A0A0A; --text: #111; --text-sec: #555;
+  --text-inv: #fff; --text-inv-sec: rgba(255,255,255,0.7);
+  --card-bg: #fff; --card-border: #e4eef4;
+  --dot-color: rgba(46,155,214,0.18); --blob-blue: #6DC5F7;
+  --review-bg: #f0f8fe;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: Calibri, 'Segoe UI', system-ui, sans-serif;
+  color: var(--text); background: var(--bg);
+  line-height: 1.55; overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.25rem, 4vw, 3rem); }
+
+/* ===================== NAV ===================== */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,10,10,0.88); backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 clamp(1.25rem,4vw,3rem);
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-brand {
+  font-weight: 900; font-size: 0.95rem; color: #fff;
+  text-decoration: none; letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.nav-brand span { color: var(--blue); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.85rem;
+  font-weight: 500; transition: color 0.2s; letter-spacing: 0.02em;
+}
+.nav-links a:hover { color: var(--blue); }
+.nav-cta {
+  background: var(--blue); color: #000; padding: 0.45rem 1.3rem;
+  border-radius: 100px; font-weight: 700; font-size: 0.82rem;
+  text-decoration: none; transition: 0.2s; border: none; cursor: pointer;
+  letter-spacing: 0.02em;
+}
+.nav-cta:hover { background: var(--blue-vivid); transform: translateY(-1px); }
+.burger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+.burger span { display: block; width: 22px; height: 2px; background: #aaa; margin: 5px 0; transition: 0.3s; }
+
+@media (max-width: 800px) {
+  .nav-links, .nav-cta-d { display: none; }
+  .burger { display: block; }
+  .nav.open .mobile-menu { display: flex; }
+}
+.mobile-menu {
+  display: none; position: absolute; top: 56px; left: 0; right: 0;
+  background: rgba(10,10,10,0.97); flex-direction: column; padding: 1.5rem 2rem 2rem;
+  gap: 1.2rem; border-top: 1px solid rgba(109,197,247,0.08);
+}
+.mobile-menu a {
+  color: rgba(255,255,255,0.7); text-decoration: none; font-size: 1rem; font-weight: 500;
+}
+.mobile-menu .nav-cta { display: inline-block; text-align: center; margin-top: 0.5rem; }
+
+/* ===================== HERO ===================== */
+.hero {
+  background: var(--bg-dark); min-height: 100vh; min-height: 100svh;
+  display: flex; align-items: center; position: relative; overflow: hidden;
+  padding: 5rem 0 4rem;
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+  align-items: center; width: 100%;
+}
+.hero-left { position: relative; z-index: 2; }
+.hero-eyebrow {
+  display: inline-block; background: rgba(109,197,247,0.12);
+  border: 1px solid rgba(109,197,247,0.2); border-radius: 100px;
+  padding: 0.35rem 1rem; font-size: 0.8rem; font-weight: 600;
+  color: var(--blue); letter-spacing: 0.04em; margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-family: 'Display', 'Arial Black', Impact, sans-serif;
+  font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+  font-weight: 900; line-height: 0.92; color: #fff;
+  text-transform: uppercase; letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+.hero h1 .accent { color: var(--blue); }
+.hero-desc {
+  color: rgba(255,255,255,0.6); font-size: 1.1rem; line-height: 1.6;
+  max-width: 420px; margin-bottom: 2rem;
+}
+.hero-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.8rem 2rem; border-radius: 100px; font-weight: 700;
+  font-size: 0.92rem; text-decoration: none; transition: 0.2s; border: none; cursor: pointer;
+}
+.btn--primary { background: var(--blue); color: #000; }
+.btn--primary:hover { background: var(--blue-vivid); transform: translateY(-2px); }
+.btn--ghost {
+  background: transparent; color: var(--blue); border: 1.5px solid rgba(109,197,247,0.25);
+}
+.btn--ghost:hover { border-color: var(--blue); background: rgba(109,197,247,0.06); }
+
+.hero-right { position: relative; display: flex; justify-content: center; align-items: center; }
+.hero-logo-wrap {
+  width: clamp(260px, 28vw, 400px); height: clamp(260px, 28vw, 400px);
+  position: relative;
+}
+.hero-blob {
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at 40% 40%, rgba(109,197,247,0.25) 0%, transparent 70%);
+  border-radius: 50%; filter: blur(40px);
+  animation: pulse 6s ease-in-out infinite alternate;
+}
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.15); opacity: 0.4; }
+}
+.hero-logo-svg { width: 100%; height: 100%; position: relative; z-index: 2; }
+
+/* Dotted lines floating in hero */
+.hero-dots {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+}
+
+@media (max-width: 800px) {
+  .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  .hero-desc { margin: 0 auto 2rem; }
+  .hero-buttons { justify-content: center; }
+  .hero-right { order: -1; }
+  .hero-logo-wrap { width: 200px; height: 200px; }
+}
+
+/* ===================== MARQUEE ===================== */
+.marquee-section {
+  background: var(--blue); overflow: hidden; padding: 0.9rem 0;
+  border-top: 2px dotted rgba(0,0,0,0.08);
+  border-bottom: 2px dotted rgba(0,0,0,0.08);
+}
+.marquee-track {
+  display: flex; gap: 0; white-space: nowrap;
+  animation: marquee 25s linear infinite;
+}
+.marquee-track span {
+  font-family: 'Display', 'Arial Black', Impact, sans-serif;
+  font-size: 1.15rem; font-weight: 900; text-transform: uppercase;
+  color: #000; letter-spacing: 0.05em; padding: 0 1.5rem;
+  flex-shrink: 0;
+}
+.marquee-track .dot {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(0,0,0,0.3); vertical-align: middle; margin: 0 0.5rem;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===================== ABOUT (big type section) ===================== */
+.about-section {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: var(--bg);
+  position: relative;
+}
+.about-content { max-width: 900px; }
+.section-tag {
+  display: inline-block; font-size: 0.75rem; font-weight: 700;
+  color: var(--blue-deep); letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 1rem; padding: 0.3rem 0.8rem; border-radius: 4px;
+  background: var(--bg-alt); border: 1px dotted var(--dot-color);
+}
+.big-heading {
+  font-family: 'Display', 'Arial Black', Impact, sans-serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 900; line-height: 1; text-transform: uppercase;
+  letter-spacing: -0.01em; margin-bottom: 1.5rem; text-wrap: balance;
+  color: var(--text);
+}
+.big-heading .hl { color: var(--blue-deep); }
+.about-text {
+  font-size: 1.15rem; line-height: 1.7; color: var(--text-sec);
+  max-width: 620px; margin-bottom: 2.5rem;
+}
+
+/* Subject pills */
+.subject-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+.pill {
+  background: var(--bg-alt); border: 1.5px dotted var(--dot-color);
+  padding: 0.65rem 1.4rem; border-radius: 100px; font-weight: 600;
+  font-size: 0.92rem; color: var(--text); transition: 0.2s;
+}
+.pill:hover { border-color: var(--blue-deep); background: var(--blue-pale); transform: scale(1.04); }
+
+/* ===================== FEATURE STRIP (blue bg) ===================== */
+.feature-strip {
+  background: var(--bg-blue); padding: clamp(3rem, 6vw, 5rem) 0;
+  position: relative; overflow: hidden;
+}
+.feature-strip::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(
+    90deg, transparent 0, transparent 99px,
+    rgba(0,0,0,0.04) 99px, rgba(0,0,0,0.04) 100px
+  );
+}
+.feature-strip .wrap { position: relative; z-index: 2; }
+.feature-strip .section-tag { background: rgba(0,0,0,0.08); color: #000; border-color: rgba(0,0,0,0.15); }
+.feature-strip .big-heading { color: #000; }
+.feature-strip .big-heading .hl { color: rgba(0,0,0,0.5); }
+
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.feat-card {
+  background: rgba(255,255,255,0.92); border-radius: 16px; padding: 1.75rem;
+  backdrop-filter: blur(8px); transition: transform 0.2s;
+}
+.feat-card:hover { transform: translateY(-4px); }
+.feat-icon {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--blue); display: flex; align-items: center;
+  justify-content: center; margin-bottom: 1rem;
+}
+.feat-icon svg { width: 20px; height: 20px; stroke: #000; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.feat-card h3 { font-size: 1.05rem; font-weight: 700; color: #111; margin-bottom: 0.4rem; }
+.feat-card p { font-size: 0.88rem; color: #444; line-height: 1.5; }
+
+@media (max-width: 800px) {
+  .features-grid { grid-template-columns: 1fr; }
+}
+
+/* ===================== VALUES (dark) ===================== */
+.values-section {
+  background: var(--bg-dark); padding: clamp(4rem, 8vw, 7rem) 0;
+  position: relative; overflow: hidden;
+}
+.values-section .section-tag { background: rgba(109,197,247,0.08); color: var(--blue); border-color: rgba(109,197,247,0.15); }
+.values-section .big-heading { color: #fff; }
+
+.values-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.val-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px; padding: 2rem; position: relative;
+  transition: border-color 0.3s;
+}
+.val-card:hover { border-color: rgba(109,197,247,0.2); }
+.val-num {
+  font-family: 'Display', 'Arial Black', Impact, sans-serif;
+  font-size: 3rem; font-weight: 900; color: rgba(109,197,247,0.15);
+  line-height: 1; margin-bottom: 0.75rem;
+}
+.val-card h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+.val-card p { font-size: 0.9rem; color: rgba(255,255,255,0.5); line-height: 1.55; }
+
+@media (max-width: 600px) { .values-row { grid-template-columns: 1fr; } }
+
+/* ===================== HOW IT WORKS (steps) ===================== */
+.how-section {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: var(--bg);
+}
+.how-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+  margin-top: 2.5rem; align-items: start;
+}
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: grid; grid-template-columns: 56px 1fr; gap: 1.25rem;
+  padding-bottom: 2rem; position: relative;
+}
+.step:last-child { padding-bottom: 0; }
+.step-line {
+  width: 56px; display: flex; flex-direction: column; align-items: center;
+}
+.step-dot {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 2.5px dotted var(--blue); display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+  font-weight: 800; font-size: 0.9rem; color: var(--blue-deep);
+  background: var(--bg);
+}
+.step-connector {
+  width: 2px; flex: 1; margin-top: 4px;
+  border-left: 2px dotted var(--dot-color);
+}
+.step:last-child .step-connector { display: none; }
+.step-body h4 { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; margin-top: 0.45rem; }
+.step-body p { font-size: 0.9rem; color: var(--text-sec); line-height: 1.5; }
+
+.how-sidebar {
+  background: var(--bg-alt); border: 1.5px dotted var(--dot-color);
+  border-radius: 20px; padding: 2.25rem; position: sticky; top: 5rem;
+}
+.how-sidebar h3 {
+  font-family: 'Display', 'Arial Black', Impact, sans-serif;
+  font-size: 1.3rem; font-weight: 900; text-transform: uppercase;
+  margin-bottom: 1.25rem; color: var(--text);
+}
+.subj-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.subj-list li {
+  display: flex; align-items: center; gap: 0.65rem;
+  font-size: 0.95rem; color: var(--text-sec);
+}
+.subj-list .mark {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--blue-deep); flex-shrink: 0;
+}
+
+.stats-bar {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem;
+  margin-top: 2rem; padding-top: 1.5rem;
+  border-top: 2px dotted var(--dot-color);
+}
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Display', 'Arial Black', Impact, sans-serif;
+  font-size: 1.6rem; font-weight: 900; color: var(--blue-deep); line-height: 1;
+}
+.stat-label { font-size: 0.72rem; color: var(--text-sec); margin-top: 0.25rem; line-height: 1.2; }
+
+@media (max-width: 800px) {
+  .how-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .how-sidebar { position: static; }
+}
+
+/* ===================== REVIEWS ===================== */
+.reviews-section {
+  padding: clamp(4rem, 8vw, 7rem) 0;
+  background: var(--bg-alt);
+}
+.reviews-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.review {
+  background: var(--card-bg); border: 1px solid var(--card-border);
+  border-radius: 16px; padding: 1.75rem; display: flex; flex-direction: column;
+  transition: transform 0.2s;
+}
+.review:hover { transform: translateY(-3px); }
+.review-quote {
+  font-family: 'Display', 'Arial Black', Impact, sans-serif;
+  font-size: 2.5rem; color: var(--blue); line-height: 0.8; margin-bottom: 0.75rem;
+  opacity: 0.4;
+}
+.review-text { font-size: 0.9rem; color: var(--text-sec); line-height: 1.6; flex: 1; }
+.review-footer {
+  margin-top: 1.25rem; padding-top: 1rem; border-top: 1.5px dotted var(--dot-color);
+  display: flex; align-items: center; gap: 0.65rem;
+}
+.review-ava {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--blue); display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem; color: #000; flex-shrink: 0;
+}
+.review-name { font-weight: 700; font-size: 0.88rem; color: var(--text); }
+.review-role { font-size: 0.75rem; color: var(--text-sec); }
+
+@media (max-width: 800px) { .reviews-grid { grid-template-columns: 1fr; } }
+
+/* ===================== FOUNDER NOTE ===================== */
+.founder-section {
+  padding: 3rem 0;
+  background: var(--bg);
+  border-top: 2px dotted var(--dot-color);
+  border-bottom: 2px dotted var(--dot-color);
+}
+.founder-card {
+  display: flex; align-items: center; gap: 2rem;
+  max-width: 700px; margin: 0 auto;
+}
+.founder-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 2.5px dotted var(--blue); display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0;
+  background: var(--bg-alt);
+}
+.founder-icon svg { width: 28px; height: 28px; stroke: var(--blue-deep); fill: none; stroke-width: 2; stroke-linecap: round; }
+.founder-text h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+.founder-text p { font-size: 0.92rem; color: var(--text-sec); line-height: 1.55; }
+
+@media (max-width: 600px) {
+  .founder-card { flex-direction: column; text-align: center; }
+}
+
+/* ===================== CTA ===================== */
+.cta-section {
+  background: var(--bg-dark); padding: clamp(5rem, 10vw, 8rem) 0;
+  text-align: center; position: relative; overflow: hidden;
+}
+.cta-section .big-heading { color: #fff; margin-bottom: 1rem; }
+.cta-desc {
+  color: rgba(255,255,255,0.5); font-size: 1.05rem;
+  max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.6;
+}
+.cta-buttons { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+.cta-bg-text {
+  position: absolute; bottom: -2rem; left: 50%; transform: translateX(-50%);
+  font-family: 'Display', 'Arial Black', Impact, sans-serif;
+  font-size: clamp(4rem, 12vw, 10rem); font-weight: 900; text-transform: uppercase;
+  color: rgba(109,197,247,0.04); white-space: nowrap; pointer-events: none;
+  letter-spacing: -0.02em;
+}
+
+/* ===================== FOOTER ===================== */
+.footer {
+  background: var(--bg-dark); padding: 1.5rem 0;
+  border-top: 1px solid rgba(109,197,247,0.06);
+}
+.footer-inner {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+}
+.footer-copy { color: var(--gray-muted); font-size: 0.78rem; }
+.footer-links { display: flex; gap: 1.5rem; list-style: none; }
+.footer-links a { color: var(--gray-muted); text-decoration: none; font-size: 0.78rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--blue); }
+
+/* ===================== SLOGAN BREAK ===================== */
+.slogan-break {
+  padding: 2.5rem 0; background: var(--bg); text-align: center;
+  border-bottom: 2px dotted var(--dot-color);
+}
+.slogan-text {
+  font-style: italic; font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--text-sec); letter-spacing: 0.02em;
+}
+.slogan-text::before, .slogan-text::after {
+  content: ''; display: inline-block; width: 50px; height: 1.5px;
+  background: var(--dot-color); vertical-align: middle; margin: 0 1rem;
+}
+
+/* ===================== MOBILE DEEP ===================== */
+@media (max-width: 480px) {
+  .wrap { padding: 0 1rem; }
+  .hero { padding: 4.5rem 0 2.5rem; min-height: auto; min-height: unset; }
+  .hero h1 { font-size: 2.4rem; line-height: 0.95; }
+  .hero-eyebrow { font-size: 0.7rem; padding: 0.3rem 0.8rem; margin-bottom: 1rem; }
+  .hero-desc { font-size: 0.95rem; margin-bottom: 1.5rem; }
+  .hero-buttons { flex-direction: column; width: 100%; }
+  .hero-buttons .btn { width: 100%; justify-content: center; text-align: center; padding: 0.85rem 1rem; }
+  .hero-logo-wrap { width: 170px !important; height: 170px !important; }
+  .hero-blob { filter: blur(25px); }
+
+  .marquee-section { padding: 0.65rem 0; }
+  .marquee-track span { font-size: 0.85rem; padding: 0 0.8rem; }
+
+  .big-heading { font-size: 1.8rem; margin-bottom: 1rem; }
+  .about-text { font-size: 1rem; margin-bottom: 1.5rem; }
+  .subject-pills { gap: 0.4rem; }
+  .pill { padding: 0.5rem 1rem; font-size: 0.82rem; }
+
+  .section-tag { font-size: 0.68rem; padding: 0.25rem 0.65rem; }
+  .about-section, .how-section, .reviews-section { padding: 3rem 0; }
+  .feature-strip { padding: 3rem 0; }
+  .values-section { padding: 3rem 0; }
+
+  .features-grid { gap: 0.75rem; margin-top: 1.5rem; }
+  .feat-card { padding: 1.25rem; }
+  .feat-card h3 { font-size: 0.95rem; }
+  .feat-card p { font-size: 0.82rem; }
+  .feat-icon { width: 36px; height: 36px; margin-bottom: 0.75rem; }
+  .feat-icon svg { width: 17px; height: 17px; }
+
+  .values-row { gap: 0.75rem; margin-top: 1.5rem; }
+  .val-card { padding: 1.5rem; }
+  .val-num { font-size: 2.2rem; }
+  .val-card h3 { font-size: 1rem; }
+  .val-card p { font-size: 0.85rem; }
+
+  .how-grid { gap: 2rem; margin-top: 1.5rem; }
+  .step { grid-template-columns: 44px 1fr; gap: 0.75rem; padding-bottom: 1.5rem; }
+  .step-dot { width: 34px; height: 34px; font-size: 0.8rem; }
+  .step-body h4 { font-size: 0.95rem; margin-top: 0.3rem; }
+  .step-body p { font-size: 0.85rem; }
+  .how-sidebar { padding: 1.5rem; border-radius: 14px; }
+  .how-sidebar h3 { font-size: 1.1rem; }
+  .subj-list li { font-size: 0.88rem; }
+  .stats-bar { gap: 0.5rem; }
+  .stat-num { font-size: 1.3rem; }
+  .stat-label { font-size: 0.65rem; }
+
+  .reviews-grid { gap: 0.75rem; margin-top: 1.5rem; }
+  .review { padding: 1.25rem; }
+  .review-quote { font-size: 2rem; }
+  .review-text { font-size: 0.85rem; }
+  .review-name { font-size: 0.82rem; }
+  .review-ava { width: 32px; height: 32px; font-size: 0.75rem; }
+
+  .founder-card { gap: 1rem; }
+  .founder-icon { width: 50px; height: 50px; }
+  .founder-icon svg { width: 22px; height: 22px; }
+  .founder-text h4 { font-size: 0.9rem; }
+  .founder-text p { font-size: 0.85rem; }
+  .founder-section { padding: 2rem 0; }
+
+  .cta-section { padding: 3.5rem 0; }
+  .cta-section .big-heading { font-size: 2rem; }
+  .cta-desc { font-size: 0.92rem; margin-bottom: 2rem; }
+  .cta-buttons { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
+  .cta-buttons .btn { width: 100%; justify-content: center; }
+  .cta-bg-text { font-size: 3rem; }
+
+  .slogan-break { padding: 1.75rem 0; }
+  .slogan-text { font-size: 1rem; }
+  .slogan-text::before, .slogan-text::after { width: 25px; margin: 0 0.5rem; }
+
+  .footer-inner { flex-direction: column; text-align: center; gap: 0.5rem; }
+  .footer-links { justify-content: center; }
+}
+
+/* Tablet improvements */
+@media (min-width: 481px) and (max-width: 800px) {
+  .features-grid { grid-template-columns: 1fr 1fr; }
+  .reviews-grid { grid-template-columns: 1fr 1fr; }
+  .values-row { grid-template-columns: 1fr 1fr; }
+  .hero h1 { font-size: 2.8rem; }
+}
+
+/* Touch targets */
+@media (hover: none) and (pointer: coarse) {
+  .btn { min-height: 48px; }
+  .nav-cta { min-height: 40px; display: inline-flex; align-items: center; }
+  .pill { min-height: 44px; display: inline-flex; align-items: center; }
+  .nav-links a { padding: 0.5rem 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">Школа <span>Лампиевой</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#features">Фишки</a></li>
+      <li><a href="#how">Формат</a></li>
+      <li><a href="#reviews">Отзывы</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta nav-cta-d">Записаться</a>
+    <button class="burger" onclick="document.getElementById('nav').classList.toggle('open')" aria-label="Меню">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-menu">
+      <a href="#about" onclick="document.getElementById('nav').classList.remove('open')">О нас</a>
+      <a href="#features" onclick="document.getElementById('nav').classList.remove('open')">Фишки</a>
+      <a href="#how" onclick="document.getElementById('nav').classList.remove('open')">Формат</a>
+      <a href="#reviews" onclick="document.getElementById('nav').classList.remove('open')">Отзывы</a>
+      <a href="#contact" class="nav-cta" onclick="document.getElementById('nav').classList.remove('open')">Записаться</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <!-- Dotted line background -->
+  <svg class="hero-dots" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <line x1="0" y1="80" x2="450" y2="500" stroke="rgba(109,197,247,0.07)" stroke-width="1.5" stroke-dasharray="3 8"/>
+    <line x1="300" y1="0" x2="700" y2="650" stroke="rgba(109,197,247,0.05)" stroke-width="1.5" stroke-dasharray="3 8"/>
+    <line x1="900" y1="0" x2="550" y2="700" stroke="rgba(109,197,247,0.06)" stroke-width="1.5" stroke-dasharray="3 8"/>
+    <line x1="1200" y1="150" x2="750" y2="500" stroke="rgba(109,197,247,0.05)" stroke-width="1.5" stroke-dasharray="3 8"/>
+    <line x1="1050" y1="0" x2="1150" y2="700" stroke="rgba(109,197,247,0.04)" stroke-width="1.5" stroke-dasharray="3 8"/>
+    <line x1="0" y1="400" x2="1200" y2="350" stroke="rgba(109,197,247,0.03)" stroke-width="1" stroke-dasharray="4 12"/>
+    <line x1="150" y1="700" x2="600" y2="100" stroke="rgba(109,197,247,0.04)" stroke-width="1" stroke-dasharray="3 9"/>
+  </svg>
+
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Онлайн-школа нового поколения</div>
+        <h1>
+          Мы —<br>
+          <span class="accent">зумеры,</span><br>
+          и мы<br>
+          преподаём
+        </h1>
+        <p class="hero-desc">
+          Все без педагогического диплома. Пришли в профессию из любви к предмету. Сами сдавали ЕГЭ и знаем, каково это.
+        </p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn--primary">Записаться на пробный урок</a>
+          <a href="#about" class="btn btn--ghost">Узнать больше</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-logo-wrap">
+          <div class="hero-blob" aria-hidden="true"></div>
+          <svg class="hero-logo-svg" viewBox="0 0 300 300" fill="none" aria-label="Логотип Школы Лампиевой">
+            <circle cx="150" cy="150" r="145" fill="#6DC5F7"/>
+            <!-- Polygonal dotted grid -->
+            <line x1="40" y1="55" x2="115" y2="115" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.55"/>
+            <line x1="260" y1="55" x2="185" y2="115" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.55"/>
+            <line x1="25" y1="185" x2="105" y2="155" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.55"/>
+            <line x1="275" y1="185" x2="195" y2="155" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.55"/>
+            <line x1="40" y1="55" x2="260" y2="55" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.45"/>
+            <line x1="25" y1="185" x2="50" y2="250" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.4"/>
+            <line x1="275" y1="185" x2="250" y2="250" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.4"/>
+            <line x1="50" y1="250" x2="150" y2="285" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.35"/>
+            <line x1="250" y1="250" x2="150" y2="285" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.35"/>
+            <line x1="115" y1="115" x2="185" y2="115" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.5"/>
+            <line x1="105" y1="155" x2="195" y2="155" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="3 5" opacity="0.5"/>
+            <!-- Lightbulb -->
+            <path d="M150 62c-28 0-50 23-50 52 0 18 9.5 34 24 42.5v16.5c0 4 3.5 7.5 7.5 7.5h37c4 0 7.5-3.5 7.5-7.5v-16.5c14.5-8.5 24-24.5 24-42.5 0-29-22-52-50-52z" fill="white" stroke="#1a1a1a" stroke-width="4.5"/>
+            <rect x="133" y="184" width="34" height="6" rx="3" fill="none" stroke="#1a1a1a" stroke-width="3.5"/>
+            <rect x="135" y="194" width="30" height="6" rx="3" fill="none" stroke="#1a1a1a" stroke-width="3.5"/>
+            <path d="M138 112c0 0 4-11 12-11s12 11 12 11" stroke="#1a1a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Математика</span><span class="dot"></span>
+    <span>Русский язык</span><span class="dot"></span>
+    <span>Английский</span><span class="dot"></span>
+    <span>Китайский</span><span class="dot"></span>
+    <span>История</span><span class="dot"></span>
+    <span>Химия</span><span class="dot"></span>
+    <span>ЕГЭ</span><span class="dot"></span>
+    <span>ОГЭ</span><span class="dot"></span>
+    <span>Олимпиады</span><span class="dot"></span>
+    <span>ВПР</span><span class="dot"></span>
+    <span>Математика</span><span class="dot"></span>
+    <span>Русский язык</span><span class="dot"></span>
+    <span>Английский</span><span class="dot"></span>
+    <span>Китайский</span><span class="dot"></span>
+    <span>История</span><span class="dot"></span>
+    <span>Химия</span><span class="dot"></span>
+    <span>ЕГЭ</span><span class="dot"></span>
+    <span>ОГЭ</span><span class="dot"></span>
+    <span>Олимпиады</span><span class="dot"></span>
+    <span>ВПР</span><span class="dot"></span>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section class="about-section" id="about">
+  <div class="wrap">
+    <div class="about-content">
+      <div class="section-tag">О школе</div>
+      <h2 class="big-heading">Новое поколение<br><span class="hl">преподавателей</span></h2>
+      <p class="about-text">
+        Онлайн-школа индивидуального и группового обучения. Готовим к урокам, контрольным, ВПР, ОГЭ, ЕГЭ и олимпиадам, преподаём иностранные языки для учеников любого возраста.
+      </p>
+      <p class="about-text" style="margin-top:-1rem">
+        Все наши преподаватели — зумеры. Без педагогического диплома, зато с глубоким знанием предмета и любовью к нему. Мы сами недавно сдавали ЕГЭ и точно знаем, каково это.
+      </p>
+      <div class="subject-pills">
+        <span class="pill">Математика</span>
+        <span class="pill">Русский язык</span>
+        <span class="pill">Английский язык</span>
+        <span class="pill">Китайский язык</span>
+        <span class="pill">История</span>
+        <span class="pill">Химия</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLOGAN ============ -->
+<div class="slogan-break">
+  <span class="slogan-text">Легче полюбить, чем зазубрить</span>
+</div>
+
+<!-- ============ FEATURES (blue) ============ -->
+<section class="feature-strip" id="features">
+  <div class="wrap">
+    <div class="section-tag">Наши фишки</div>
+    <h2 class="big-heading">Почему<br>выбирают <span class="hl">нас</span></h2>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <h3>Мы — зумеры</h3>
+        <p>Все преподаватели сами сдавали ЕГЭ и продолжают учиться. Говорим с учениками на одном языке.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Куратор 24/7</h3>
+        <p>Ученик задаёт вопрос в любой момент — преподаватель отвечает видео-объяснением в тот же день.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        </div>
+        <h3>Запись уроков</h3>
+        <p>Ученик и родитель всегда могут пересмотреть занятие — ничего не потеряется.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Графические планшеты</h3>
+        <p>Рисуем, чертим, показываем решение в реальном времени — качество не хуже офлайна.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Пробники ЕГЭ / ОГЭ</h3>
+        <p>Каждый сезон проводим пробные экзамены с проверкой независимыми экспертами.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24"><path d="M4.93 4.93a10 10 0 0 1 14.14 0"/><path d="M7.76 7.76a6 6 0 0 1 8.49 0"/><circle cx="12" cy="14" r="2"/></svg>
+        </div>
+        <h3>Формат 40/10</h3>
+        <p>40 минут занятия — 10 минут перерыв, чтобы внимание не рассеивалось.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VALUES (dark) ============ -->
+<section class="values-section">
+  <div class="wrap">
+    <div class="section-tag">Ценности</div>
+    <h2 class="big-heading">Во что мы<br>верим</h2>
+    <div class="values-row">
+      <div class="val-card">
+        <div class="val-num">01</div>
+        <h3>Интерес вместо страха</h3>
+        <p>Заменяем зубрёжку и тревожность увлечённостью предметом.</p>
+      </div>
+      <div class="val-card">
+        <div class="val-num">02</div>
+        <h3>Свои люди</h3>
+        <p>Преподаватель — тоже недавний выпускник, который сам сдавал ЕГЭ и продолжает учиться.</p>
+      </div>
+      <div class="val-card">
+        <div class="val-num">03</div>
+        <h3>Экспертность без диплома</h3>
+        <p>Любовь к предмету и глубокое знание темы — наш профессионализм.</p>
+      </div>
+      <div class="val-card">
+        <div class="val-num">04</div>
+        <h3>Дружелюбие</h3>
+        <p>Никаких «глупых вопросов» — только поддержка и понимание.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how-section" id="how">
+  <div class="wrap">
+    <div class="section-tag">Формат</div>
+    <h2 class="big-heading">Как устроены<br><span class="hl">занятия</span></h2>
+    <div class="how-grid">
+      <div class="steps">
+        <div class="step">
+          <div class="step-line">
+            <div class="step-dot">1</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="step-body">
+            <h4>Бесплатный пробный урок</h4>
+            <p>Знакомимся, определяем уровень ученика, подбираем удобный график и подходящего преподавателя.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-line">
+            <div class="step-dot">2</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="step-body">
+            <h4>Индивидуальная программа</h4>
+            <p>Составляем план под конкретные цели — подготовка к ЕГЭ, подтянуть оценки или разобраться в предмете с нуля.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-line">
+            <div class="step-dot">3</div>
+            <div class="step-connector"></div>
+          </div>
+          <div class="step-body">
+            <h4>Занятия с записью</h4>
+            <p>Каждый урок записывается. Формат 40/10 — занятие с перерывом, чтобы сохранить концентрацию.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-line">
+            <div class="step-dot">4</div>
+          </div>
+          <div class="step-body">
+            <h4>Поддержка между уроками</h4>
+            <p>Куратор на связи 24/7. Застрял на задаче — отправляй вопрос, ответ придёт видео-объяснением в тот же день.</p>
+          </div>
+        </div>
+      </div>
+      <div class="how-sidebar">
+        <h3>Предметы</h3>
+        <ul class="subj-list">
+          <li><span class="mark"></span> Математика — базовая и профильная</li>
+          <li><span class="mark"></span> Русский язык и литература</li>
+          <li><span class="mark"></span> Английский язык</li>
+          <li><span class="mark"></span> Китайский язык</li>
+          <li><span class="mark"></span> История и обществознание</li>
+          <li><span class="mark"></span> Химия</li>
+        </ul>
+        <div class="stats-bar">
+          <div class="stat">
+            <div class="stat-num">24/7</div>
+            <div class="stat-label">куратор на связи</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">40/10</div>
+            <div class="stat-label">минут формат</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">уроков записаны</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section class="founder-section">
+  <div class="wrap">
+    <div class="founder-card">
+      <div class="founder-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg>
+      </div>
+      <div class="founder-text">
+        <h4>Основано Полиной Лампиевой</h4>
+        <p>Школа Лампиевой работает с 29 августа 2024 года. Полина лично формирует стандарт качества уроков, на который равняются все преподаватели школы.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section class="reviews-section" id="reviews">
+  <div class="wrap">
+    <div class="section-tag">Отзывы</div>
+    <h2 class="big-heading">Что говорят<br><span class="hl">ученики и родители</span></h2>
+    <div class="reviews-grid">
+      <div class="review">
+        <div class="review-quote">"</div>
+        <p class="review-text">Занятия очень помогли мне в учёбе. У меня появился интерес к геометрии, чего я от себя совсем не ожидала. Мне очень доступно объясняли все темы и помогали перед контрольными. Совсем не ругали, если я что-то не понимала, и всё объясняли простыми словами.</p>
+        <div class="review-footer">
+          <div class="review-ava">А</div>
+          <div>
+            <div class="review-name">Аня</div>
+            <div class="review-role">ученица, 8 класс</div>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div class="review-quote">"</div>
+        <p class="review-text">Марк совершил прорыв в математике. Ребёнок теперь сам садится за уроки с энтузиазмом. У меня больше нет головной боли по поводу домашки — она стала интересной. Объясняют на простых примерах, увлекают более сложными задачками.</p>
+        <div class="review-footer">
+          <div class="review-ava">О</div>
+          <div>
+            <div class="review-name">Олеся</div>
+            <div class="review-role">мама ученика, 1 класс</div>
+          </div>
+        </div>
+      </div>
+      <div class="review">
+        <div class="review-quote">"</div>
+        <p class="review-text">За учебный год дочь подняла средний балл до 4.6 — серьёзное достижение. Находят подход к детям, делая уроки интересными и продуктивными. Терпение и умение объяснять сложные темы простым языком — всё на высоте.</p>
+        <div class="review-footer">
+          <div class="review-ava">Н</div>
+          <div>
+            <div class="review-name">Наталья</div>
+            <div class="review-role">мама ученицы, 5 класс</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta-section" id="contact">
+  <div class="cta-bg-text" aria-hidden="true">Зумеры преподают</div>
+  <div class="wrap" style="position:relative;z-index:2">
+    <h2 class="big-heading">Готовы<br>полюбить учёбу?</h2>
+    <p class="cta-desc">Запишитесь на бесплатный пробный урок — познакомим с форматом и подберём преподавателя.</p>
+    <div class="cta-buttons">
+      <a href="https://t.me/lampmaths" class="btn btn--primary" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.479.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Telegram
+      </a>
+      <a href="https://vk.com/lampmath" class="btn btn--ghost" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.391 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.523-2.049-1.712-1.033-1.033-1.49-1.172-1.744-1.172-.356 0-.458.102-.458.593v1.563c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4 8.59 4 8.165c0-.254.102-.49.593-.49h1.744c.44 0 .61.203.78.678.847 2.455 2.268 4.608 2.853 4.608.22 0 .322-.102.322-.66V9.96c-.068-1.186-.695-1.287-.695-1.71 0-.203.17-.407.44-.407h2.744c.372 0 .508.203.508.643v3.473c0 .372.17.508.271.508.22 0 .407-.136.813-.542 1.253-1.406 2.149-3.574 2.149-3.574.119-.254.305-.49.745-.49h1.744c.525 0 .643.27.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .78.186.254.796.779 1.203 1.253.746.864 1.322 1.592 1.474 2.083.17.49-.085.744-.576.744z"/></svg>
+        ВКонтакте
+      </a>
+      <a href="https://instagram.com/lampieva_school" class="btn btn--ghost" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <span class="footer-copy">Школа Лампиевой · Онлайн-школа нового поколения</span>
+      <ul class="footer-links">
+        <li><a href="https://instagram.com/lampieva_school" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://t.me/lampmaths" target="_blank" rel="noopener">Telegram</a></li>
+        <li><a href="https://vk.com/lampmath" target="_blank" rel="noopener">VK</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+let ly=0;const nv=document.getElementById('nav');
+window.addEventListener('scroll',()=>{const s=window.scrollY;
+nv.style.transform=s>80&&s>ly?'translateY(-100%)':'translateY(0)';ly=s},{passive:true});
+</script>
