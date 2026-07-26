@@ -307,8 +307,14 @@ img { max-width: 100%; display: block; }
   background: var(--bg-dark); padding: clamp(4rem, 8vw, 7rem) 0;
   position: relative; overflow: hidden;
 }
+.values-canvas {
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none; display: block;
+}
+.values-section .wrap { position: relative; z-index: 2; }
 .values-section .section-tag { background: rgba(109,197,247,0.08); color: var(--blue); border-color: rgba(109,197,247,0.15); }
 .values-section .big-heading { color: #fff; }
+.val-card { backdrop-filter: blur(2px); }
 
 .values-row {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
@@ -826,7 +832,8 @@ img { max-width: 100%; display: block; }
 </section>
 
 <!-- ============ VALUES (dark) ============ -->
-<section class="values-section">
+<section class="values-section" id="valuesSection">
+  <canvas class="values-canvas" id="valuesCanvas" aria-hidden="true"></canvas>
   <div class="wrap">
     <div class="section-tag">Ценности</div>
     <h2 class="big-heading">Во что мы<br>верим</h2>
@@ -1073,5 +1080,89 @@ nv.style.transform=s>80&&s>ly?'translateY(-100%)':'translateY(0)';ly=s},{passive
     if(!raf)raf=requestAnimationFrame(loop);
   });
   hero.addEventListener('mouseleave',()=>{active=false;hero.classList.remove('glow-on');});
+})();
+
+// Flow-field частицы в секции «Ценности» (vanilla canvas)
+(function(){
+  const section=document.getElementById('valuesSection');
+  const canvas=document.getElementById('valuesCanvas');
+  if(!section||!canvas) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const ctx=canvas.getContext('2d');
+  if(!ctx) return;
+
+  const COLOR='#6DC5F7';          // фирменный голубой
+  const TRAIL=0.12;               // ниже = длиннее шлейф
+  const SPEED=0.8;
+  const isSmall=window.matchMedia('(max-width: 700px)').matches;
+  const COUNT=isSmall?260:600;
+
+  let width=0,height=0,dpr=1,particles=[],raf=null,running=false;
+  const mouse={x:-1000,y:-1000};
+
+  function Particle(){ this.reset(true); }
+  Particle.prototype.reset=function(spread){
+    this.x=Math.random()*width;
+    this.y=Math.random()*height;
+    this.vx=0; this.vy=0;
+    this.age=spread?Math.random()*300:0;
+    this.life=Math.random()*200+100;
+  };
+  Particle.prototype.update=function(){
+    const angle=(Math.cos(this.x*0.005)+Math.sin(this.y*0.005))*Math.PI;
+    this.vx+=Math.cos(angle)*0.2*SPEED;
+    this.vy+=Math.sin(angle)*0.2*SPEED;
+    const dx=mouse.x-this.x, dy=mouse.y-this.y;
+    const dist=Math.sqrt(dx*dx+dy*dy), R=150;
+    if(dist<R){
+      const f=(R-dist)/R;
+      this.vx-=dx*f*0.05; this.vy-=dy*f*0.05;
+    }
+    this.x+=this.vx; this.y+=this.vy;
+    this.vx*=0.95; this.vy*=0.95;
+    this.age++;
+    if(this.age>this.life) this.reset(false);
+    if(this.x<0)this.x=width; if(this.x>width)this.x=0;
+    if(this.y<0)this.y=height; if(this.y>height)this.y=0;
+  };
+  Particle.prototype.draw=function(c){
+    c.fillStyle=COLOR;
+    c.globalAlpha=(1-Math.abs((this.age/this.life)-0.5)*2)*0.9;
+    c.fillRect(this.x,this.y,1.6,1.6);
+  };
+
+  function init(){
+    width=section.clientWidth; height=section.clientHeight;
+    dpr=window.devicePixelRatio||1;
+    canvas.width=width*dpr; canvas.height=height*dpr;
+    canvas.style.width=width+'px'; canvas.style.height=height+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    particles=[];
+    for(let i=0;i<COUNT;i++) particles.push(new Particle());
+  }
+  function animate(){
+    ctx.globalAlpha=1;
+    ctx.fillStyle='rgba(6,7,10,'+TRAIL+')';
+    ctx.fillRect(0,0,width,height);
+    for(let i=0;i<particles.length;i++){ particles[i].update(); particles[i].draw(ctx); }
+    raf=requestAnimationFrame(animate);
+  }
+  function start(){ if(running)return; running=true; animate(); }
+  function stop(){ running=false; if(raf)cancelAnimationFrame(raf); raf=null; }
+
+  init();
+  // Запускаем анимацию только когда секция видна (экономим ресурсы)
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ e.isIntersecting?start():stop(); });
+  },{threshold:0.05});
+  io.observe(section);
+
+  let rt=null;
+  window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(init,200); },{passive:true});
+  section.addEventListener('mousemove',(e)=>{
+    const r=canvas.getBoundingClientRect();
+    mouse.x=e.clientX-r.left; mouse.y=e.clientY-r.top;
+  });
+  section.addEventListener('mouseleave',()=>{ mouse.x=-1000; mouse.y=-1000; });
 })();
 </script>
