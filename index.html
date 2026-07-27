@@ -259,9 +259,8 @@ img { max-width: 100%; display: block; }
 .pill {
   background: var(--bg-alt); border: 1.5px dotted var(--dot-color);
   padding: 0.65rem 1.4rem; border-radius: 100px; font-weight: 600;
-  font-size: 0.92rem; color: var(--text); transition: 0.2s;
+  font-size: 0.92rem; color: var(--text); cursor: default;
 }
-.pill:hover { border-color: var(--blue-deep); background: var(--blue-pale); transform: scale(1.04); }
 
 /* ===================== FEATURE STRIP (blue bg) ===================== */
 .feature-strip {
@@ -278,7 +277,7 @@ img { max-width: 100%; display: block; }
 .feature-strip .wrap { position: relative; z-index: 2; }
 .feature-strip .section-tag { background: rgba(0,0,0,0.08); color: #000; border-color: rgba(0,0,0,0.15); }
 .feature-strip .big-heading { color: #000; }
-.feature-strip .big-heading .hl { color: rgba(0,0,0,0.5); }
+.feature-strip .big-heading .hl { color: #fff; }
 
 .features-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
@@ -328,7 +327,7 @@ img { max-width: 100%; display: block; }
 .val-card:hover { border-color: rgba(109,197,247,0.2); }
 .val-num {
   font-family: 'Display', 'Arial Black', Impact, sans-serif;
-  font-size: 3rem; font-weight: 900; color: rgba(109,197,247,0.15);
+  font-size: 3rem; font-weight: 900; color: var(--blue);
   line-height: 1; margin-bottom: 0.75rem;
 }
 .val-card h3 { font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
@@ -452,8 +451,8 @@ img { max-width: 100%; display: block; }
   max-width: 720px; margin: 0 auto;
 }
 .founder-photo {
-  width: 110px; height: 110px; border-radius: 50%;
-  flex-shrink: 0; padding: 5px;
+  width: 150px; height: 150px; border-radius: 50%;
+  flex-shrink: 0; padding: 6px;
   border: 2.5px dotted var(--blue);
   position: relative;
 }
@@ -524,11 +523,11 @@ img { max-width: 100%; display: block; }
 }
 
 .cta-bg-text {
-  position: absolute; bottom: -2rem; left: 50%; transform: translateX(-50%);
+  position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
   font-family: 'Display', 'Arial Black', Impact, sans-serif;
-  font-size: clamp(4rem, 12vw, 10rem); font-weight: 900; text-transform: uppercase;
-  color: rgba(109,197,247,0.04); white-space: nowrap; pointer-events: none;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 6vw, 4.5rem); font-weight: 900; text-transform: uppercase;
+  color: rgba(109,197,247,0.07); white-space: nowrap; pointer-events: none;
+  letter-spacing: 0.02em;
 }
 
 /* ===================== FOOTER ===================== */
@@ -616,7 +615,7 @@ img { max-width: 100%; display: block; }
   .review-ava { width: 32px; height: 32px; font-size: 0.75rem; }
 
   .founder-card { gap: 1.25rem; }
-  .founder-photo { width: 96px; height: 96px; }
+  .founder-photo { width: 130px; height: 130px; }
   .founder-text h4 { font-size: 0.95rem; }
   .founder-text p { font-size: 0.85rem; }
   .founder-section { padding: 2rem 0; }
@@ -626,7 +625,7 @@ img { max-width: 100%; display: block; }
   .cta-desc { font-size: 0.92rem; margin-bottom: 2rem; }
   .cta-buttons { flex-direction: column; width: 100%; max-width: 320px; margin: 0 auto; }
   .cta-buttons .btn { width: 100%; justify-content: center; }
-  .cta-bg-text { font-size: 3rem; }
+  .cta-bg-text { font-size: 1.4rem; bottom: 1rem; }
 
   .slogan-break { padding: 1.75rem 0; }
   .slogan-text { font-size: 1rem; }
